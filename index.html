@@ -10,8 +10,18 @@
 <body>
  
   <script>
-    const notionUrl = document.referrer; //gets the URL of the page where this slider is embedded//
-    console.log("Current Notion URL:", notionUrl);
+       // Function to log the current URL
+    function logCurrentUrl() {
+      console.log("Current URL:", window.location.href);
+    }
+
+    // Listen for popstate events
+    window.addEventListener('popstate', function(event) {
+      logCurrentUrl();  // Log the URL when history changes
+    });
+
+    // Log the URL immediately when the page loads
+    logCurrentUrl();
 
 
   </script>
