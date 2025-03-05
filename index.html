@@ -10,20 +10,32 @@
 <body>
  
   <script>
-       // Function to log the current URL
+     // Function to log the current URL
     function logCurrentUrl() {
       console.log("Current URL:", window.location.href);
     }
 
-    // Listen for popstate events
+    // Listen for popstate events (triggered on back/forward buttons or history changes)
     window.addEventListener('popstate', function(event) {
       logCurrentUrl();  // Log the URL when history changes
     });
 
+    // Listen for pushState and replaceState to capture programmatic URL changes
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+
+    history.pushState = function(...args) {
+      originalPushState.apply(history, args);
+      logCurrentUrl();  // Log URL after pushState change
+    };
+
+    history.replaceState = function(...args) {
+      originalReplaceState.apply(history, args);
+      logCurrentUrl();  // Log URL after replaceState change
+    };
+
     // Log the URL immediately when the page loads
     logCurrentUrl();
-
-
   </script>
 
 </body>
